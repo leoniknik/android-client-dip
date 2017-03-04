@@ -5,16 +5,13 @@ import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.content.res.Resources;
-import android.hardware.Camera;
 import android.os.Bundle;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.view.View;
 import android.widget.Toast;
-import java.io.File;
 
 
 public class MainActivity extends Activity {
@@ -23,8 +20,6 @@ public class MainActivity extends Activity {
     AlertDialog.Builder alertDialogBadVote;
     Context context;
     private static final int NOTIFY_ID = 0;
-    private Camera camera;
-    public static File photo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,55 +27,6 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
         initMainDialog();
         initBadVoteDialog();
-        initCamera();
-    }
-    public void initCamera(){
-        // проверяем есть ли камера на устройстве
-        if (!getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA)) {
-            Toast.makeText(this, "На этом устройстве не камеры.", Toast.LENGTH_LONG).show();
-        } else {
-            // получаем ID камеры
-            int cameraId = findFrontFacingCamera();
-            if (cameraId < 0) {
-                Toast.makeText(this, "Фронтальная камера не найдена.", Toast.LENGTH_LONG).show();
-            } else {
-                // открываем камеру для съемки
-                camera = Camera.open(cameraId);
-            }
-        }
-    }
-
-    public void makePhoto() {
-        camera.takePicture(null, null, new PhotoHandler(getApplicationContext()));
-        Toast.makeText(context, "Фото сделано",
-                Toast.LENGTH_LONG).show();
-    }
-
-    // поиск камеры
-    private int findFrontFacingCamera() {
-        int cameraId = -1;
-
-        // Поиск Фронтальной камеры
-        int numberOfCameras = Camera.getNumberOfCameras();
-        for (int i = 0; i < numberOfCameras; i++) {
-            Camera.CameraInfo info = new Camera.CameraInfo();
-            Camera.getCameraInfo(i, info);
-            // тут вы указываете какую камеру использовать CAMERA_FACING_BACK или CAMERA_FACING_FRONT
-            if (info.facing == Camera.CameraInfo.CAMERA_FACING_FRONT) {
-                cameraId = i;
-                break;
-            }
-        }
-        return cameraId;
-    }
-
-    @Override
-    protected void onPause() {
-        if (camera != null) {
-            camera.release();
-            camera = null;
-        }
-        super.onPause();
     }
 
     public void initMainDialog(){
@@ -96,7 +42,6 @@ public class MainActivity extends Activity {
             public void onClick(DialogInterface dialog, int which) {
                 Toast.makeText(context, "Хорошо",
                         Toast.LENGTH_LONG).show();
-                makePhoto();
             }
         });
         alertDialogMain.setNegativeButton(buttonStringBad, new DialogInterface.OnClickListener() {
@@ -162,5 +107,12 @@ public class MainActivity extends Activity {
                 .getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.notify(NOTIFY_ID, notification);
     }
+
 }
+
+
+
+
+
+
 

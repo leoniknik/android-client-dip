@@ -2,4 +2,6 @@
     <string name="app_name">Test1</string>
     <string name="first_dialog_button">Первый диалог</string>
     <string name="push_button">Вызвать пуш</string>
+    <string name="album_name">CameraSample</string>
+    <string name="cannot">Уппс</string>
 </resources>
