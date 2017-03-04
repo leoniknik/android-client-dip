@@ -13,6 +13,8 @@ import android.content.DialogInterface;
 import android.view.View;
 import android.widget.Toast;
 
+import de.tavendo.autobahn.WebSocketConnection;
+
 
 public class MainActivity extends Activity {
 
@@ -20,6 +22,7 @@ public class MainActivity extends Activity {
     AlertDialog.Builder alertDialogBadVote;
     Context context;
     private static final int NOTIFY_ID = 0;
+    WebSocketConnection mConnection;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +30,10 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
         initMainDialog();
         initBadVoteDialog();
+    }
+
+    public void initWebSocket() {
+        mConnection = new WebSocketConnection();
     }
 
     public void initMainDialog(){
@@ -106,6 +113,14 @@ public class MainActivity extends Activity {
         NotificationManager notificationManager = (NotificationManager) context
                 .getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.notify(NOTIFY_ID, notification);
+    }
+
+    public void selfieButtonClick(View view){
+
+    }
+
+    public void webSocketButtonClick(View view){
+
     }
 
 }

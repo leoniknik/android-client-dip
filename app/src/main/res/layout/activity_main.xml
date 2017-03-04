@@ -24,14 +24,23 @@
         android:id="@+id/button" />
 
     <Button
-        android:id="@+id/btnIntendS"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Селфи"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_marginEnd="76dp"
-        android:onClick="selfieButtonClick"/>
+        android:onClick="selfieButtonClick"
+        android:id="@+id/button3" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Веб-сокет"
+        android:onClick="webSocketButtonClick"
+        android:layout_alignBaseline="@+id/button"
+        android:layout_alignBottom="@+id/button"
+        android:layout_alignEnd="@+id/button3" />
 
 </RelativeLayout>
 
